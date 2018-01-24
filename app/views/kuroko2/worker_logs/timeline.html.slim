@@ -1,0 +1,31 @@
+- content_for :title, "Worker Logs Timeline"
+- content_for :content_title do
+    <i class="fa fa-clock-o"></i> Worker Logs Timeline
+
+.row
+  .col-md-12
+    .box
+      .box-header
+        nav class="navbar navbar-default"
+          div class="container-fluid"
+            div class="navbar-header"
+              a class="navbar-brand" href="#" Period
+            div class="" id="period-nav"
+              ul class="nav navbar-nav"
+                li class="#{params[:period] == '1h' || !params[:period] ? 'active' : ''}"
+                  = link_to '1 hour', timeline_worker_logs_path(params.permit(:hostname, :end_at).merge(period: '1h'))
+                li class="#{params[:period] == '3h' ? 'active' : ''}"
+                  = link_to '3 hours', timeline_worker_logs_path(params.permit(:hostname, :end_at).merge(period: '3h'))
+                li class="#{params[:period] == '6h' ? 'active' : ''}"
+                  = link_to '6 hours', timeline_worker_logs_path(params.permit(:hostname, :end_at).merge(period: '6h'))
+                li class="#{params[:period] == '12h' ? 'active' : ''}"
+                  = link_to '12 hours', timeline_worker_logs_path(params.permit(:hostname, :end_at).merge(period: '12h'))
+                li class="#{params[:period] == '1d' ? 'active' : ''}"
+                  = link_to '1 day', timeline_worker_logs_path(params.permit(:hostname, :end_at).merge(period: '1d'))
+                li class="#{params[:period] == '3d' ? 'active' : ''}"
+                  = link_to '3 days', timeline_worker_logs_path(params.permit(:hostname, :end_at).merge(period: '3d'))
+                li class="#{params[:period] == '1w' ? 'active' : ''}"
+                  = link_to '1 week', timeline_worker_logs_path(params.permit(:hostname, :end_at).merge(period: '1w'))
+
+      .box-body
+        div#timeline data-dataset-path="#{timeline_dataset_worker_logs_path(params.permit(:hostname, :start_at, :end_at, :period))}"

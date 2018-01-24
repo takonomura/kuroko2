@@ -5,7 +5,11 @@
 
 .box#worker-logs
   .box-header
-    h3.box-title Worker Logs
+    .row
+      .col-md-9
+        h3.box-title Worker Logs
+      .col-md-3.right-button
+        = link_to raw('<i class="fa fa-clock-o"></i> Show Timeline'), timeline_worker_logs_path(params.permit(:hostname)), class: 'btn btn-default btn-small btn-block js-to-timeline'
   - if @logs.empty?
     .box-body
       .text-muted.well.well-sm.no-shadow There are no worker logs yet.

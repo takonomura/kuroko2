@@ -23,7 +23,10 @@ Kuroko2::Engine.routes.draw do
   end
 
   resources :workers, only: :index
-  resources :worker_logs, path: 'workers/logs', only: :index
+  resources :worker_logs, path: 'workers/logs', only: :index do
+    get 'timeline', action: :timeline, on: :collection
+    get 'timeline/dataset', action: :dataset, on: :collection, defaults: { format: 'json' }
+  end
   resources :job_instances, path: 'instances', only: %w() do
     get :working, action: :working, on: :collection
   end
