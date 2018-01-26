@@ -23,6 +23,7 @@ Kuroko2::Engine.routes.draw do
   end
 
   resources :workers, only: :index
+  resources :worker_logs, path: 'workers/logs', only: :index
   resources :job_instances, path: 'instances', only: %w() do
     get :working, action: :working, on: :collection
   end

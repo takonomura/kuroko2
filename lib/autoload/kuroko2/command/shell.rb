@@ -50,12 +50,23 @@ module Kuroko2
         command = execution.shell
         env     = execution.context.fetch('ENV', {})
 
+        worker_log = Kuroko2::WorkerLog.create(
+          hostname: @hostname,
+          worker_id: @worker_id,
+          queue: @queue,
+          job_definition: execution.token.job_definition,
+          job_instance: execution.token.job_instance,
+          shell: command,
+        )
+
         message = "[#{@hostname}-#{@worker_id}] (uuid #{execution.uuid}) `#{command}` run with env (#{env})"
         execution.token.job_instance.logs.info(message)
         Kuroko2.logger.info(message)
 
         output, status = execute_shell(command, env, execution)
         output         = truncate_and_escape(output)
+
+        worker_log.touch(:finished_at)
 
         if status.signaled?
           message = "[#{@hostname}-#{@worker_id}] (uuid #{execution.uuid}) `#{command}` stopped by #{Signal.signame(status.termsig)} signal (pid #{status.pid})"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 30) do
+ActiveRecord::Schema.define(version: 31) do
 
   create_table "admin_assignments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.integer "user_id", null: false
@@ -188,6 +188,18 @@ ActiveRecord::Schema.define(version: 30) do
     t.index ["email"], name: "email"
     t.index ["uid", "suspended_at"], name: "uid_2"
     t.index ["uid"], name: "uid", unique: true
+  end
+
+  create_table "worker_logs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string "hostname", limit: 180, null: false
+    t.integer "worker_id", limit: 1, null: false
+    t.string "queue", limit: 180, null: false
+    t.integer "job_definition_id", null: false
+    t.integer "job_instance_id", null: false
+    t.text "shell", null: false
+    t.datetime "finished_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "workers", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|

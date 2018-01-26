@@ -1,0 +1,39 @@
+- content_for :title, 'Worker Logs'
+- content_for :content_title do
+  <i class="fa fa-history"></i> Worker Logs
+- @scope = @logs
+
+.box#worker-logs
+  .box-header
+    h3.box-title Worker Logs
+  - if @logs.empty?
+    .box-body
+      .text-muted.well.well-sm.no-shadow There are no worker logs yet.
+  - else
+    .box-body.table-responsive
+      table.table.table-hover
+        thead
+          tr
+            th.col-md-2 Hostname
+            th.col-md-1 WID
+            th.col-md-2 Queue
+            th.col-md-2 Job
+            th.col-md-2 Command
+            th.col-md-2 Started at
+            th.col-md-1 Elapsed Time
+        tbody
+          - for log in @logs
+            tr
+              td= log.hostname
+              td= log.worker_id
+              td= log.queue
+              td.no-decorate= link_to "##{log.job_definition.id} #{log.job_definition.name}", job_definition_job_instance_path(log.job_definition, log.job_instance)
+              td= log.shell
+              td= l(log.created_at, format: :short)
+              td
+                - if log.finished_at?
+                  = distance_of_time(log.created_at, log.finished_at)
+                - else
+                  '-
+    .box-footer#pagination
+      = paginate @logs, theme: 'list'
