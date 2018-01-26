@@ -24,6 +24,12 @@ module Kuroko2::Command
             expect(subject.started_at).not_to be_nil
             expect(subject.finished_at).not_to be_nil
             expect(subject).to be_success
+
+            expect(Kuroko2::WorkerLog.count).to eq 1
+            expect(Kuroko2::WorkerLog.first.hostname).to eq 'rspec'
+            expect(Kuroko2::WorkerLog.first.shell).to eq shell
+            expect(Kuroko2::WorkerLog.first.created_at).not_to be_nil
+            expect(Kuroko2::WorkerLog.first.finished_at).not_to be_nil
           end
         end
 
