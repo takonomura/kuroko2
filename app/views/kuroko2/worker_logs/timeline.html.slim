@@ -12,6 +12,8 @@
               a class="navbar-brand" href="#" Period
             div class="" id="period-nav"
               ul class="nav navbar-nav"
+                li class="#{params[:period] == '30m' ? 'active' : ''}"
+                  = link_to '30 minutes', timeline_worker_logs_path(params.permit(:hostname, :end_at).merge(period: '30m'))
                 li class="#{params[:period] == '1h' || !params[:period] ? 'active' : ''}"
                   = link_to '1 hour', timeline_worker_logs_path(params.permit(:hostname, :end_at).merge(period: '1h'))
                 li class="#{params[:period] == '3h' ? 'active' : ''}"
