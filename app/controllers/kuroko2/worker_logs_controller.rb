@@ -1,24 +1,24 @@
 class Kuroko2::WorkerLogsController < Kuroko2::ApplicationController
   def index
-    @logs = Kuroko2::WorkerLog.ordered.includes(:job_definition, :job_instance)
+    logs = Kuroko2::WorkerLog.ordered.includes(:job_definition, :job_instance)
 
     hostname = params[:hostname]
-    @logs = @logs.where(hostname: hostname) if hostname.present?
+    logs = logs.where(hostname: hostname) if hostname.present?
 
-    @logs = @logs.page(params[:page])
+    @logs = logs.page(params[:page])
   end
 
   def timeline
   end
 
   def dataset
-    @logs = Kuroko2::WorkerLog.ordered.includes(:job_definition, :job_instance)
+    logs = Kuroko2::WorkerLog.ordered.includes(:job_definition, :job_instance)
 
     hostname = params[:hostname]
-    @logs = @logs.where(hostname: hostname) if hostname.present?
+    logs = logs.where(hostname: hostname) if hostname.present?
 
     set_period
-    @logs = @logs.where('created_at < ?', @end_at).where('finished_at > ? OR finished_at IS NULL', @start_at)
+    @logs = logs.where('created_at < ?', @end_at).where('finished_at > ? OR finished_at IS NULL', @start_at)
   end
 
   private

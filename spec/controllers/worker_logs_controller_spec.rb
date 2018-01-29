@@ -51,7 +51,7 @@ describe Kuroko2::WorkerLogsController do
 
       expect(assigns(:logs)).to match_array logs
       expect(assigns(:end_at)).not_to be_nil
-      expect(assigns(:start_at)).to eq assigns(:end_at) - 1.hour
+      expect(assigns(:start_at)).to eq(assigns(:end_at) - 1.hour)
     end
 
     context 'with valid hostname' do
@@ -77,14 +77,14 @@ describe Kuroko2::WorkerLogsController do
         let(:period) { '30m' }
         it do
           expect(assigns(:logs)).to match_array logs
-          expect(assigns(:start_at)).to eq assigns(:end_at) - 30.minutes
+          expect(assigns(:start_at)).to eq(assigns(:end_at) - 30.minutes)
         end
       end
       context '1 hour' do
         let(:period) { '1h' }
         it do
           expect(assigns(:logs)).to match_array logs
-          expect(assigns(:start_at)).to eq assigns(:end_at) - 1.hour
+          expect(assigns(:start_at)).to eq(assigns(:end_at) - 1.hour)
         end
       end
 
@@ -92,7 +92,7 @@ describe Kuroko2::WorkerLogsController do
         let(:period) { '1d' }
         it do
           expect(assigns(:logs)).to match_array logs
-          expect(assigns(:start_at)).to eq assigns(:end_at) - 1.day
+          expect(assigns(:start_at)).to eq(assigns(:end_at) - 1.day)
         end
       end
 
@@ -100,7 +100,7 @@ describe Kuroko2::WorkerLogsController do
         let(:period) { '1w' }
         it do
           expect(assigns(:logs)).to match_array logs
-          expect(assigns(:start_at)).to eq assigns(:end_at) - 1.week
+          expect(assigns(:start_at)).to eq(assigns(:end_at) - 1.week)
         end
       end
     end
