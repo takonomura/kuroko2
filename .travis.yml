@@ -1,9 +1,6 @@
 dist: trusty
 language: ruby
 cache: bundler
-branches:
-  only:
-    - master
 rvm:
   - ruby-head
   - 2.4.1
