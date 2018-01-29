@@ -23,22 +23,41 @@ class Kuroko2::WorkerLogsController < Kuroko2::ApplicationController
 
   private
 
-  def set_period
-    @end_at = begin params[:end_at].to_datetime rescue Time.current end
-
-    @start_at = begin params[:start_at].to_datetime rescue
-      case params[:period]
-      when /\A(\d+)m\z/
-        $1.to_i.minutes.ago(@end_at)
-      when /\A(\d+)h\z/
-        $1.to_i.hours.ago(@end_at)
-      when /\A(\d+)d\z/
-        $1.to_i.days.ago(@end_at)
-      when /\A(\d+)w\z/
-        $1.to_i.weeks.ago(@end_at)
-      else
-        1.hour.ago(@end_at)
+  def end_at
+    if params[:end_at].present?
+      begin
+        return params[:end_at].to_datetime
+      rescue ArgumentError
+        # do nothing
       end
     end
+    Time.current
+  end
+
+  def start_at
+    if params[:start_at].present?
+      begin
+        return params[:start_at].to_datetime
+      rescue ArgumentError
+        # do nothing
+      end
+    end
+    case params[:period]
+    when /\A(\d+)m\z/
+      $1.to_i.minutes.ago(@end_at)
+    when /\A(\d+)h\z/
+      $1.to_i.hours.ago(@end_at)
+    when /\A(\d+)d\z/
+      $1.to_i.days.ago(@end_at)
+    when /\A(\d+)w\z/
+      $1.to_i.weeks.ago(@end_at)
+    else
+      1.hour.ago(@end_at)
+    end
+  end
+
+  def set_period
+    @end_at = end_at
+    @start_at = start_at
   end
 end

@@ -113,6 +113,14 @@ describe Kuroko2::WorkerLogsController do
         expect(assigns(:logs)).to match_array logs
         expect(assigns(:end_at).strftime("%d-%m-%Y %H:%M:%S")).to eq end_at.strftime("%d-%m-%Y %H:%M:%S")
       end
+
+      context 'with invalid' do
+        let(:end_at) { 'invalid' }
+
+        it do
+          expect(assigns(:logs)).to match_array logs
+        end
+      end
     end
 
     context 'with start_at' do
@@ -122,6 +130,15 @@ describe Kuroko2::WorkerLogsController do
       it do
         expect(assigns(:logs)).to match_array logs
         expect(assigns(:start_at).strftime("%d-%m-%Y %H:%M:%S")).to eq start_at.strftime("%d-%m-%Y %H:%M:%S")
+      end
+
+      context 'with invalid' do
+        let(:start_at) { 'invalid' }
+
+        it do
+          expect(assigns(:logs)).to match_array logs
+          expect(assigns(:start_at)).to eq(assigns(:end_at) - 1.hour)
+        end
       end
     end
   end
