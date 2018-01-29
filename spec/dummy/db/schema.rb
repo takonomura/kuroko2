@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 31) do
     t.datetime "finished_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["hostname", "created_at"], name: "index_kuroko2_worker_logs_on_hostname_and_created_at"
   end
 
   create_table "workers", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|

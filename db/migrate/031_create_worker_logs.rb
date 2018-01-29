@@ -11,5 +11,7 @@ class CreateWorkerLogs < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index "worker_logs", ["hostname", "created_at"], using: :btree
   end
 end
