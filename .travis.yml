@@ -22,7 +22,7 @@ before_script:
 script:
   - bin/rails db:create
   - bin/rails db:migrate RAILS_ENV=test
-  - bundle exec rspec
+  - bundle exec rspec --format=documentation
 matrix:
   allow_failures:
     - rvm: ruby-head
